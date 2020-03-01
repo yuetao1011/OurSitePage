@@ -1,0 +1,112 @@
+/* textarea组件禁止客户端拖动大小 */
+textarea {
+  resize: none;
+}
+
+/* 输入输出区域 */
+.area {
+  background-color: white;
+  margin: 80px auto -80px auto;
+  padding: 20px;
+  width: 80%;
+  min-width: 540px;
+  max-width: 960px;
+}
+
+.output {
+  overflow: auto;
+  margin: 50px auto 50px auto;
+}
+
+.output img {
+  width: 100%;
+}
+
+/* 初始化隐藏的组件 */
+#img_output_codecogs,
+#a_download_hidden {
+  display: none;
+}
+
+/* 字体图标向左偏移 */
+i {
+  margin: auto 5px auto auto;
+}
+
+#wrapper_position_buttons {
+  float: right;
+}
+
+.copyright {
+  text-align: center;
+}
+
+.copyright p{
+  font-size: small;
+}
+
+/*
+//覆盖框架默认
+*/
+
+/* 覆盖框架默认-焦点时边框高亮样式 */
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #ced4da;
+  outline: 0;
+  box-shadow: 0 0 0 0rem rgba(0, 123, 255, 0.25);
+}
+
+/* 覆盖框架默认-点击时边框高亮样式 */
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* 覆盖框架默认-placeholder字体颜色 */
+.form-control::-webkit-input-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+
+.form-control::-moz-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+
+.form-control::-ms-input-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+
+.form-control::placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+
+.card-title {
+  font-size: x-large;
+  margin-bottom: -2px;
+}
+
+#toast-container {
+  position: relative;
+  top: -110px;
+}
+
+.MathJax, .MathJax_Display  {
+  font-size: 300%  !important;
+  text-align: right;
+}

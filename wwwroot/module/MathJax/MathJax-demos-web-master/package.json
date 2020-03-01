@@ -1,0 +1,33 @@
+{
+  "name": "MathJax-demos-web",
+  "version": "3.0.1",
+  "description": "Demos using MathJax version 3 in web pages",
+  "dependencies": {
+    "mathjax-full": "^3.0.1"
+  },
+  "devDependencies": {
+    "ajv": "^6.4.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "lodash": "^4.17.14",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "scripts": {
+    "make-custom-tex-extension": "cd custom-tex-extension && ../node_modules/mathjax-full/components/bin/pack",
+    "make-custom-component": "cd custom-component && ../node_modules/mathjax-full/components/bin/pack",
+    "make-custom-build": "cd custom-build && ../node_modules/mathjax-full/components/bin/pack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mathjax/MathJax-demos-web/"
+  },
+  "keywords": [
+    "MathJax",
+    "examples",
+    "browser"
+  ],
+  "license": "Apache-2.0"
+}
