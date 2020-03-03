@@ -516,6 +516,7 @@ var EqEditor = {
         },
         open: function (a) {
             a.firstChild.style.outline = '1px solid #c5c5c5';
+            a.firstChild.style.zindex='999';//熊猫修改
             this.setstate(a, 'visible');
         },
         close: function (a) {

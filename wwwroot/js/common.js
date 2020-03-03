@@ -1,6 +1,11 @@
 var MyCommon = {
   fd: {},
   fn: {
+    init: function() {
+      MyCommon.fn.init_tooltip();
+      MyCommon.fn.init_img();
+      MyCommon.fn.init_toastr();
+    },
     /** 初始化气泡提示 */
     init_tooltip: function() {
       $('[data-toggle="tooltip"]').tooltip();
@@ -33,7 +38,7 @@ var MyCommon = {
         hideEasing: "linear", //消失时的动画缓冲方式
         showMethod: "fadeIn", //显示时的动画方式
         hideMethod: "fadeOut" //消失时的动画方式
-    };
+      };
     },
     /** 获得时间戳 */
     getTimeStamp: function() {

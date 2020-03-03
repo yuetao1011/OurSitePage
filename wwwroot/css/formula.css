@@ -23,7 +23,7 @@ textarea {
 }
 
 /* 初始化隐藏的组件 */
-#img_output_codecogs,
+#img_output_hidden,
 #a_download_hidden {
   display: none;
 }
@@ -107,6 +107,5 @@ i {
 }
 
 .MathJax, .MathJax_Display  {
-  font-size: 300%  !important;
-  text-align: right;
+  font-size: 200%  !important;
 }

@@ -1,16 +1,13 @@
 $(function() {
-  MyCommon.fn.init_tooltip();
-  MyCommon.fn.init_img();
-  MyCommon.fn.init_toastr();
-  MyFormula.fn.init_toolbar();
-  MyFormula.fn.render();
-  $("#" + MyFormula.fd.codecogsTextarea).on("input", function() {
+  MyCommon.fn.init();
+  MyFormula.fn.init();
+  $("#" + MyFormula.fd.input).on("input", function() {
     MyFormula.fn.render();
   });
-  $("#" + MyFormula.fd.codecogsTextarea).focus(function() {
+  $("#" + MyFormula.fd.input).focus(function() {
     MyFormula.fn.render();
   });
-  $("#" + MyFormula.fd.svgDownloadButton).click(function() {
+  $("#" + MyFormula.fd.svgbtn).click(function() {
     if (MyFormula.fn.isInputNull()) {
       toastr.clear();
       toastr.info("没有发现任何Latex表达式");
@@ -26,7 +23,7 @@ $(function() {
       }
     }
   });
-  $("#" + MyFormula.fd.pngDownloadButton).click(function() {
+  $("#" + MyFormula.fd.pngbtn).click(function() {
     if (MyFormula.fn.isInputNull()) {
       toastr.clear();
       toastr.info("没有发现任何Latex表达式");
@@ -42,7 +39,7 @@ $(function() {
       }
     }
   });
-  $("#" + MyFormula.fd.copyMathmlButton).click(function() {
+  $("#" + MyFormula.fd.copyMLbtn).click(function() {
     if (MyFormula.fn.isInputNull()) {
       toastr.clear();
       toastr.info("没有发现任何Latex表达式");
@@ -57,127 +54,67 @@ $(function() {
       }
     }
   });
+  $("#" + MyFormula.fd.copySVGbtn).click(function() {});
+
+  $('#panel11>img').css('z-index','11');
+  $('#panel7>img').css('z-index','7');
 });
 
 var MyFormula = {
   fd: {
-    EDTIOR_DESIGN: "bin,sym,for,sub,acc,ace,arr,ope,bra,gel,geu,rel,mat,geo",
-    mathjaxOutput: "wrapper_output_mathjax", //输出mathjax（带右键菜单）的div
-    codecogsToolbar: "wrapper_toolbar_codecogs", //渲染codecogs工具栏的div
-    codecogsTextarea: "txta_input_codecogs", //codecogs用于接收latex表达式的textarea
-    codecogsHiddenImg: "img_output_codecogs", //codecogs用于实时预览的img
-    svgDownloadButton: "btn_download_svg", //用于下载svg的button
-    pngDownloadButton: "btn_download_png", //用于下载png的button
-    copyMathmlButton: "btn_copy_mathml", //用于将MathML代码复制到剪切板的button
-    hiddenDownloadLink: "a_download_hidden", //用于模拟下载动作的隐藏链接
-    emptyImg: "wrapper_show_emptyimg", //用于容纳填充位置的空内容图片的div
-    xmlHeader:
-      "<" + '?xml version="1.0" encoding="UTF-8" standalone="no" ?' + ">\n", //用于构建svg文件的文件头
+    toolbar: "wrapper_toolbar_codecogs", //用于渲染codecogs工具栏的div
+    input: "txta_input_codecogs", //用于接收latex表达式的textarea
+    empty: "wrapper_output_empty", //用于容纳填充位置的空内容图片的div
+    output: "wrapper_output_mathjax", //用于输出mathjax的div
+    svgbtn: "btn_download_svg", //用于下载svg文件的button
+    pngbtn: "btn_download_png", //用于下载png的button
+    copyMLbtn: "btn_copy_mathml", //用于将MathML代码复制到剪切板的button
+    copySVGbtn: "btn_copy_svg", //用于将svg源码复制到剪切板的button
+    hidImg: "img_output_hidden", //用于实时预览codecogs的img
+    hidLink: "a_download_hidden", //用于模拟下载动作的隐藏链接
+
     svgSource: "", //克隆出来用于其他操作的svg元素（已调整过宽高）
-    downloadFileNamePrefix: "MommyTalkLatex" //下载文件前缀
+    namePrefix: "MommyTalkLatex" //下载文件前缀
   },
   fn: {
+    /** 初始化 */
+    init: function() {
+      MyFormula.fn.init_toolbar();
+      MyFormula.fn.render();
+    },
     /** 初始化公式工具栏 */
     init_toolbar: function() {
+      EDTIOR_DESIGN = "bin,sym,for,sub,acc,ace,arr,ope,bra,gel,geu,rel,mat,geo";
       EqEditor.embed(
-        MyFormula.fd.codecogsToolbar,
+        MyFormula.fd.toolbar,
         "",
         MyFormula.fd.EDTIOR_DESIGN,
         "zh-cn"
       );
       EqEditor.add(
-        new EqTextArea(
-          MyFormula.fd.codecogsHiddenImg,
-          MyFormula.fd.codecogsTextarea
-        ),
+        new EqTextArea(MyFormula.fd.hidImg, MyFormula.fd.input),
         false
       );
     },
     /** 渲染mathjax预览 */
     render: function() {
       if (MyFormula.fn.isInputNull()) {
-        $("#" + MyFormula.fd.emptyImg).show();
-        $("#" + MyFormula.fd.mathjaxOutput).hide();
+        $("#" + MyFormula.fd.empty).show();
+        $("#" + MyFormula.fd.output).hide();
       } else {
-        $("#" + MyFormula.fd.emptyImg).hide();
-        $("#" + MyFormula.fd.mathjaxOutput).show();
+        $("#" + MyFormula.fd.empty).hide();
+        $("#" + MyFormula.fd.output).show();
         MyFormula.fn.toMathjax();
       }
     },
-    /** 输入框是否为空 */
-    isInputNull: function() {
-      let input = document
-        .getElementById(MyFormula.fd.codecogsTextarea)
-        .value.trim();
-      return input == "" ? true : false;
-    },
-    /** 文本转svg输出 */
-    toSVG: function() {
-      let input = document
-        .getElementById(MyFormula.fd.codecogsTextarea)
-        .value.trim();
-      //let input='\\begin{matrix}'+input_+'\\end{matrix}';
-      let output = document.getElementById(MyFormula.fd.svgOutput);
-      output.innerHTML = "";
-      let options = {};
-      let node = MathJax.tex2svg(input, options);
-      let elsvg = node.firstElementChild;
-      elsvg.setAttribute("width", "100%");
-      elsvg.setAttribute("height", "70px");
-      elsvg.removeAttribute("style");
-      elsvg.removeAttribute("focusable");
-      elsvg.removeAttribute("role");
-      output.appendChild(elsvg);
-      let htmltemp = elsvg.innerHTML;
-      let eltemp = elsvg.cloneNode();
-      eltemp.setAttribute("width", "1920px");
-      eltemp.setAttribute("height", "1080px");
-      eltemp.innerHTML = htmltemp;
-      MyFormula.fd.svgSource = eltemp;
-    },
-    /** 文本转mathjax输出（svg模式）*/
-    toMathjax: function() {
-      let input_1 = document
-        .getElementById(MyFormula.fd.codecogsTextarea)
-        .value.trim();
-      //let input_2 = "\\begin{align}" + input_1 + "\\end{align}";
-      //let input_3 = input_2.replace(new RegExp("\\\\\\\\", "g"), "abc");
-      let reg = /\\begin{.{1}matrix}([\s\S]*?)\\end{.{1}matrix}/i;
-
-      let rep = input_1.replace(reg, function(input_1) {
-        let ne = "";
-        let len = input_1.length;
-        for (let i = 0; i < len; i++) {
-          ne += "*";
-        }
-        return ne;
-      });
-      console.log(rep);
-      //console.log(input_1.match(reg));
-
-      let input = input_1;
-      let output = document.getElementById(MyFormula.fd.mathjaxOutput);
-      output.innerHTML = "";
-      MathJax.texReset();
-      let options = MathJax.getMetricsFor(output);
-      options.display = true;
-      MathJax.tex2svgPromise(input, options)
-        .then(function(node) {
-          output.appendChild(node);
-        })
-        .catch(function(err) {
-          output
-            .appendChild(document.createElement("pre"))
-            .appendChild(document.createTextNode(err.message));
-        })
-        .then(function() {});
-    },
     /** 下载svg */
     downloadSVG: function() {
+      let xmlHeader =
+        "<" + '?xml version="1.0" encoding="UTF-8" standalone="no" ?' + ">\n";
       let hiddenLink = document.getElementById(MyFormula.fd.hiddenDownloadLink);
       if (hiddenLink.href) URL.revokeObjectURL(hiddenLink.href);
       let svgSourceCodeToDownload =
-        MyFormula.fd.xmlHeader + MyFormula.fd.svgSource.outerHTML;
+        xmlHeader + MyFormula.fd.svgSource.outerHTML;
       let blob = new Blob([svgSourceCodeToDownload], {
         type: "image/svg+xml"
       });
@@ -209,6 +146,73 @@ var MyFormula = {
         +MyFormula.fn.getRandomNum(1, 100).toString() + ".png";
         hiddenLink.click();
       };
+    },
+    /** 文本转Mathjax并填充页面元素 */
+    toMathjax: function() {
+      let input = MyFormula.fn.getLatex();
+      console.log(input);
+      let output = document.getElementById(MyFormula.fd.output);
+      output.innerHTML = "";
+      MathJax.texReset();
+      let options = MathJax.getMetricsFor(output);
+      options.display = true;
+      MathJax.tex2svgPromise(input, options)
+        .then(function(node) {
+          output.appendChild(node);
+        })
+        .catch(function(err) {
+          output
+            .appendChild(document.createElement("pre"))
+            .appendChild(document.createTextNode(err.message));
+        });
+    },
+    /** 文本转svg并填充虚拟元素 */
+    toSVG: function() {
+      let input = document
+        .getElementById(MyFormula.fd.codecogsTextarea)
+        .value.trim();
+      //let input='\\begin{matrix}'+input_+'\\end{matrix}';
+      let output = document.getElementById(MyFormula.fd.svgOutput);
+      output.innerHTML = "";
+      let options = {};
+      let node = MathJax.tex2svg(input, options);
+      let elsvg = node.firstElementChild;
+      elsvg.setAttribute("width", "100%");
+      elsvg.setAttribute("height", "70px");
+      elsvg.removeAttribute("style");
+      elsvg.removeAttribute("focusable");
+      elsvg.removeAttribute("role");
+      output.appendChild(elsvg);
+      let htmltemp = elsvg.innerHTML;
+      let eltemp = elsvg.cloneNode();
+      eltemp.setAttribute("width", "1920px");
+      eltemp.setAttribute("height", "1080px");
+      eltemp.innerHTML = htmltemp;
+      MyFormula.fd.svgSource = eltemp;
+    },
+    /** 获取正则加工过的表达式 */
+    getLatex() {
+      let regMatrix = /\\begin{.{1}matrix}([\s\S]*)\\end{.{1}matrix}/gi;
+      let input = document.getElementById(MyFormula.fd.input).value.trim(); //原始
+      let mch = input.match(regMatrix);
+      if (mch != null) {
+        input_temp = input.match(regMatrix)[0]; //提取矩阵部分存储起来
+        input = input.replace(regMatrix, function() {
+          //矩阵部分替换成符号
+          return "pandassign";
+        });
+        input = input.replace(new RegExp("\\\\\\\\", "g"), "\\\\" + "&"); //剩余的双斜杠替换成双斜杠+对齐符号
+        input = input.replace(new RegExp("pandassign", "g"), input_temp); //符号替换回矩阵
+      } else {
+        input = input.replace(new RegExp("\\\\\\\\", "g"), "\\\\" + "&"); //剩余的双斜杠替换成双斜杠+对齐符号
+      }
+      input = "\\begin{align}&" + input + "\\end{align}";
+      return input;
+    },
+    /** 输入框是否为空 */
+    isInputNull: function() {
+      let val = document.getElementById(MyFormula.fd.input).value.trim();
+      return val == "" ? true : false;
     }
   }
 };
