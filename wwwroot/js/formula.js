@@ -79,7 +79,6 @@ var MyFormula = {
   fn: {
     /** 初始化 */
     init: function() {
-      MyFormula.fn.init_toolbar();
       MyFormula.fn.render();
     },
     /** 初始化公式工具栏 */
