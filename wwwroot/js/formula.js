@@ -1,6 +1,6 @@
 $(function() {
   MyCommon.fn.init();
-  MyFormula.fn.init();
+  MyFormula.fn.render();
   $("#" + MyFormula.fd.input).on("input", function() {
     MyFormula.fn.render();
   });
@@ -56,45 +56,25 @@ $(function() {
   });
   $("#" + MyFormula.fd.copySVGbtn).click(function() {});
 
-  $('#panel11>img').css('z-index','11');
-  $('#panel7>img').css('z-index','7');
 });
 
 var MyFormula = {
   fd: {
-    toolbar: "wrapper_toolbar_codecogs", //用于渲染codecogs工具栏的div
     input: "txta_input_codecogs", //用于接收latex表达式的textarea
     empty: "wrapper_output_empty", //用于容纳填充位置的空内容图片的div
     output: "wrapper_output_mathjax", //用于输出mathjax的div
+
     svgbtn: "btn_download_svg", //用于下载svg文件的button
     pngbtn: "btn_download_png", //用于下载png的button
     copyMLbtn: "btn_copy_mathml", //用于将MathML代码复制到剪切板的button
     copySVGbtn: "btn_copy_svg", //用于将svg源码复制到剪切板的button
-    hidImg: "img_output_hidden", //用于实时预览codecogs的img
+
     hidLink: "a_download_hidden", //用于模拟下载动作的隐藏链接
 
     svgSource: "", //克隆出来用于其他操作的svg元素（已调整过宽高）
     namePrefix: "MommyTalkLatex" //下载文件前缀
   },
   fn: {
-    /** 初始化 */
-    init: function() {
-      MyFormula.fn.render();
-    },
-    /** 初始化公式工具栏 */
-    init_toolbar: function() {
-      EDTIOR_DESIGN = "bin,sym,for,sub,acc,ace,arr,ope,bra,gel,geu,rel,mat,geo";
-      EqEditor.embed(
-        MyFormula.fd.toolbar,
-        "",
-        MyFormula.fd.EDTIOR_DESIGN,
-        "zh-cn"
-      );
-      EqEditor.add(
-        new EqTextArea(MyFormula.fd.hidImg, MyFormula.fd.input),
-        false
-      );
-    },
     /** 渲染mathjax预览 */
     render: function() {
       if (MyFormula.fn.isInputNull()) {

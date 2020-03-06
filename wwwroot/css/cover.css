@@ -1,0 +1,52 @@
+/* 焦点时边框高亮样式 */
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #ced4da;
+    outline: 0;
+    box-shadow: 0 0 0 0rem rgba(0, 123, 255, 0.25);
+  }
+  
+  /* 点击时边框高亮样式 */
+  .btn:focus,
+  .btn:active:focus,
+  .btn.active:focus,
+  .btn.focus,
+  .btn:active.focus,
+  .btn.active.focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: none;
+  }
+  
+  /* placeholder字体颜色 */
+  .form-control::-webkit-input-placeholder {
+    color: #ccc;
+    opacity: 1;
+  }
+  
+  .form-control::-moz-placeholder {
+    color: #ccc;
+    opacity: 1;
+  }
+  
+  .form-control:-ms-input-placeholder {
+    color: #ccc;
+    opacity: 1;
+  }
+  
+  .form-control::-ms-input-placeholder {
+    color: #ccc;
+    opacity: 1;
+  }
+  
+  .form-control::placeholder {
+    color: #ccc;
+    opacity: 1;
+  }
+  
+/* 卡片title字体大小和对齐 */
+  .card-title {
+    font-size: x-large;
+    margin-bottom: -2px;
+  }

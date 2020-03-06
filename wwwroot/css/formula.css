@@ -12,18 +12,18 @@ textarea {
   min-width: 540px;
   max-width: 960px;
 }
-
+/* 输出容器 */
 .output {
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   margin: 50px auto 50px auto;
 }
-
+/* 输出容器中的图片充满容器 */
 .output img {
   width: 100%;
 }
 
 /* 初始化隐藏的组件 */
-#img_output_hidden,
 #a_download_hidden {
   display: none;
 }
@@ -33,7 +33,7 @@ i {
   margin: auto 5px auto auto;
 }
 
-#wrapper_position_buttons {
+.right {
   float: right;
 }
 
@@ -45,61 +45,8 @@ i {
   font-size: small;
 }
 
-/*
-//覆盖框架默认
-*/
 
-/* 覆盖框架默认-焦点时边框高亮样式 */
-.form-control:focus {
-  color: #495057;
-  background-color: #fff;
-  border-color: #ced4da;
-  outline: 0;
-  box-shadow: 0 0 0 0rem rgba(0, 123, 255, 0.25);
-}
 
-/* 覆盖框架默认-点击时边框高亮样式 */
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-  outline: none;
-  border-color: transparent;
-  box-shadow: none;
-}
-
-/* 覆盖框架默认-placeholder字体颜色 */
-.form-control::-webkit-input-placeholder {
-  color: #ccc;
-  opacity: 1;
-}
-
-.form-control::-moz-placeholder {
-  color: #ccc;
-  opacity: 1;
-}
-
-.form-control:-ms-input-placeholder {
-  color: #ccc;
-  opacity: 1;
-}
-
-.form-control::-ms-input-placeholder {
-  color: #ccc;
-  opacity: 1;
-}
-
-.form-control::placeholder {
-  color: #ccc;
-  opacity: 1;
-}
-
-.card-title {
-  font-size: x-large;
-  margin-bottom: -2px;
-}
 
 #toast-container {
   position: relative;

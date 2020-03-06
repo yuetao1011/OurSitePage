@@ -10,7 +10,7 @@
     <link href="../module/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../module/font-awesome-4.7.0/Font-Awesome-master/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="../module/toastr-master/build/toastr.min.css">
-    <link rel="stylesheet" type="text/css" href="../module/codecogs/equation-embed.css" />
+    <link rel="stylesheet" type="text/css" href="../css/cover.css" />
     <link rel="stylesheet" type="text/css" href="../css/formula.css" />
 </head>
 
@@ -22,9 +22,24 @@
                 <label class="card-title"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;输入区域</label>
             </div>
             <div class="card-body">
-                <div class="form-group">
-                    <label for="wrapper_toolbar_codecogs">快捷字符工具栏</label>
-                    <div id="wrapper_toolbar_codecogs"></div>
+                <div class="form-group" >
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-2 col-sm-2 col-md-1">
+                                <div class="dropdown">
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" style="padding: -2em;">
+                                        <img src="../img/toolbar1/symbol.png" style="max-width: 4rem;">
+                                        <p style="font-size:inherit;margin-bottom: -0.2rem;">常用符号</p>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div class="form-group">
                     <label for="txta_input_codecogs">Latex表达式区域(最大容纳65536个字符)</label>
@@ -43,16 +58,11 @@
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <div id="wrapper_output_empty" class="output">
+                    <div id="wrapper_output_mathjax" class="output">
                         <img src="../img/empty.png">
                     </div>
                 </div>
-                <div class="form-group">
-                    <div id="wrapper_output_mathjax" class="output">
-
-                    </div>
-                </div>
-                <div class="btn-group" role="group" id="wrapper_position_buttons">
+                <div class="btn-group right" role="group">
                     <button type="button" class="btn btn-link" id="btn_download_svg"><span><i class="fa fa-download"
                                 aria-hidden="true"></i></span>.svg</button>
                     <button type="button" class="btn btn-link" id="btn_download_png"><i class="fa fa-download"
@@ -83,8 +93,6 @@
     <!-- #region 脚本引用 -->
     <script src="../module/JQuery-3.4.1/jquery-3.4.1.min.js"></script>
     <script src="../module/bootstrap-4.3.1-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../module/codecogs/eq_config.js"></script>
-    <script src="../module/codecogs/eq_editor-lite-19.js"></script>
     <script src="../module/MathJax/MathJax-master/es5/tex-svg-config.js"></script>
     <script src="../module/MathJax/MathJax-master/es5/tex-svg.js"></script>
     <script src="../module/toastr-master/build/toastr.min.js"></script>
